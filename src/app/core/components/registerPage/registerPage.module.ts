@@ -4,12 +4,12 @@ import { RegisterPageComponent } from './registerPage.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../../core/modules/shared.module';
 
-const routes: Routes = [
-  {
-    path: 'register',
-    component: RegisterPageComponent,
-  }
-];
+// const routes: Routes = [
+//   {
+//     path: '/register',
+//     component: RegisterPageComponent,
+//   }
+// ];
 
 @NgModule({
   exports: [
@@ -18,7 +18,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forChild(routes)
+    // RouterModule.forChild(routes)
   ],
   declarations: [RegisterPageComponent]
 })

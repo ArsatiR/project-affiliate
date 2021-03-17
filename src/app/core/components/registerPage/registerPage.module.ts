@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RegisterPageComponent } from './registerPage.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../../core/modules/shared.module';
+import { LoginComponent } from '../login/login.component';
+import { LoginModule } from '../login/login.module';
 
 // const routes: Routes = [
 //   {
@@ -18,8 +20,10 @@ import { SharedModule } from '../../../core/modules/shared.module';
   imports: [
     CommonModule,
     SharedModule,
+    LoginModule,
     // RouterModule.forChild(routes)
   ],
-  declarations: [RegisterPageComponent]
+  declarations: [RegisterPageComponent],
+  entryComponents: [LoginComponent]
 })
 export class RegisterPageModule { }

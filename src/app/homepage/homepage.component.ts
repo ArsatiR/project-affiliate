@@ -9,17 +9,6 @@ import { LoginComponent } from '../core/components/login/login.component';
 })
 export class HomepageComponent implements OnInit {
 
-  constructor(public dialog : MatDialog) { }
-
-  ngOnInit() {
-  }
-
-  openLogin(){
-    const dialogRef = this.dialog.open(LoginComponent)
-
-    dialogRef.afterClosed().subscribe(result => {
-
-    })
-  }
+ ngOnInit(){}
 
 }

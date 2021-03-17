@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import {
   Router,
   Event as RouterEvent,
@@ -21,7 +22,7 @@ export class AppComponent {
 
   public showOverlay = true;
 
-  constructor(private route: Router) {
+  constructor(private route: Router, public dialog: MatDialog) {
     this.route.events.subscribe((event: RouterEvent) => {
       this.navigationInterceptor(event)
     })
@@ -35,6 +36,7 @@ export class AppComponent {
     if (event instanceof NavigationEnd) {
       setTimeout(() => { // here
         this.showOverlay = false;
+        this.dialog.closeAll()
       }, 2000);
     }
 
@@ -43,11 +45,13 @@ export class AppComponent {
       setTimeout(() => { // here
         this.showOverlay = false;
       }, 2000);
+      this.dialog.closeAll()
     }
     if (event instanceof NavigationError) {
       setTimeout(() => { // here
         this.showOverlay = false;
       }, 2000);
+      this.dialog.closeAll()
     }
   }
 }

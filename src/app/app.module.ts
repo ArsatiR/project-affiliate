@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomepageModule } from './homepage/homepage.module';
+import { HomepageModule } from './main/homepage/homepage.module';
 import { SharedModule } from './core/modules/shared.module';
-import { RegisterPageModule } from './core/components/registerPage/registerPage.module';
+import { RegisterPageModule } from './authentication/registerPage/registerPage.module';
 @NgModule({
   declarations: [
     AppComponent

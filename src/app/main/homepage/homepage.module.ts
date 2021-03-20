@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HomepageComponent } from './homepage.component';
 import { SharedModule } from '../../core/modules/shared.module';
 import { FooterComponent } from './footer/footer.component';
-import { NavbarModule } from '../navbar/navbar.module';
-import { NavbarComponent } from '../navbar/navbar.component';
 import { RouterModule } from '@angular/router';
+import { NavbarModule } from '../navbar/navbar.module';
 
 @NgModule({
   exports: [HomepageComponent],

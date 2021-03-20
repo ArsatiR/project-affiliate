@@ -5,6 +5,7 @@ import { SharedModule } from '../../core/modules/shared.module';
 import { RouterModule } from '@angular/router';
 import { LoginModule } from '../../authentication/login/login.module';
 import { LoginComponent } from '../../authentication/login/login.component';
+import { MarketplaceModule } from 'src/app/core/root/content/marketplace/marketplace.module';
 
 @NgModule({
   exports: [NavbarComponent],
@@ -12,7 +13,8 @@ import { LoginComponent } from '../../authentication/login/login.component';
     CommonModule,
     SharedModule,
     LoginModule,
-    RouterModule
+    RouterModule,
+    MarketplaceModule
   ],
   declarations: [NavbarComponent],
   entryComponents: [LoginComponent]

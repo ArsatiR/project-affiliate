@@ -9,6 +9,8 @@ import { LoginComponent } from '../../authentication/login/login.component';
 })
 export class HomepageComponent implements OnInit {
 
- ngOnInit(){}
+ ngOnInit(){
+   localStorage.clear()
+ }
 
 }

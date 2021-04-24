@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomepageComponent } from './homepage.component';
-import { SharedModule } from '../core/modules/shared.module';
+import { SharedModule } from '../../core/modules/shared.module';
+import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
-import { LoginModule } from '../core/components/login/login.module';
-import { LoginComponent } from '../core/components/login/login.component';
+import { NavbarModule } from '../navbar/navbar.module';
 
 @NgModule({
   exports: [HomepageComponent],
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule,
-    LoginModule
+    NavbarModule,
+    RouterModule
   ],
-  declarations: [HomepageComponent],
-  entryComponents: [LoginComponent]
+  declarations: [HomepageComponent, FooterComponent],
 })
 export class HomepageModule { }

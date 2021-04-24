@@ -1,0 +1,30 @@
+
+
+.dialog{
+  .mat-dialog-container{
+    background: #99A3A1;
+  }
+
+  .background-detail{
+    background: #FFFFFF;
+    border-radius: 20px;
+  }
+  .header-dialog{
+    text-align: center;
+  }
+
+  .bottom-dialog{
+    display: flex;
+    justify-content: center;
+  }
+  .link{
+    width: -webkit-fill-available;
+    height: 34px;
+    text-align: center;
+  }
+
+  .copy-btn{
+
+  }
+
+}

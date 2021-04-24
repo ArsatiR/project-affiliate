@@ -1,0 +1,12 @@
+#wrapper {
+  display: flex;
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow: hidden;
+  }
+}

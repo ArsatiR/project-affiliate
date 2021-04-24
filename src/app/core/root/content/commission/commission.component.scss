@@ -1,0 +1,47 @@
+
+.content-box {
+  margin: 15px 0px 0px 20px;
+  width: 980px;
+  height: 618px;
+  background: #C4C4C4;
+  border-radius: 20px;
+  box-sizing: inherit;
+  overflow: auto;
+
+  .commission-box{
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .box{
+      padding-top: 10px;
+    }
+    .chart-line-container{
+      width: 801px;
+        height: 253px;
+        background: #FFFFFF;
+        border-radius: 20px;
+    }
+    .table-commission-container{
+      width: 801px;
+        height: 253px;
+        background: #FFFFFF;
+        border-radius: 20px;
+    }
+    .chart-block-container{
+      width: 801px;
+        height: 253px;
+        background: #FFFFFF;
+        border-radius: 20px;
+    }
+    .table-merchant-container{
+      width: 801px;
+        height: 253px;
+        background: #FFFFFF;
+        border-radius: 20px;
+    }
+  }
+
+
+}

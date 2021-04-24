@@ -1,7 +1,10 @@
 .register {
     background: -webkit-linear-gradient(left, #3931af, #00c6ff);
-    margin-top: 3%;
+    margin: 0 auto;
+    height: 100%;
+    overflow: hidden;
     padding: 3%;
+    // overflow: hidden;
 }
 
 .register-left {
@@ -73,6 +76,19 @@
     border-radius: 1.5rem;
     padding: 2%;
     background: #0062cc;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+.btnCancel {
+    float: right;
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #858b92;
+    font-weight: bold;
     color: #fff;
     font-weight: 600;
     width: 50%;

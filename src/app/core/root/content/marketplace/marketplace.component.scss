@@ -1,0 +1,106 @@
+.container-fluid {
+  overflow: hidden;
+  .search-box {
+    width: 207px;
+    height: 615px;
+    background: #C4C4C4;
+    border-radius: 20px;
+    margin: 15px 20px 0px 20px;
+  }
+
+  .content-box {
+    margin: 15px 0px 0px 20px;
+    width: 980px;
+    height: 618px;
+    background: #C4C4C4;
+    border-radius: 20px;
+    box-sizing: inherit;
+
+    #search-box {
+      display: flex;
+      justify-content: center;
+      padding-top: 24px;
+
+      .search-wrapper {
+        width: 560px;
+        border-radius: 28px;
+        overflow: hidden;
+        background-color: #ffffff !important;
+        border: solid 0.5px;
+        border-color: rgba(0, 0, 0, 0.12) !important;
+
+        // @include mat-elevation(1);
+        // @include media-breakpoint('xs') {
+        //     width: 100%;
+        // }
+        .search {
+          width: 100%;
+          height: 48px;
+          line-height: 48px;
+          padding: 0 18px;
+
+          input {
+            width: 100%;
+            height: 48px;
+            min-height: 48px;
+            max-height: 48px;
+            padding: 0 16px;
+            border: none;
+            outline: none;
+          }
+        }
+      }
+    }
+
+    .main-search {
+      display: flex;
+      overflow: auto;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 24px;
+      height: 750px;
+
+      .search-card {
+        min-width: 640px;
+        min-height: 230px;
+        background: #FFFFFF;
+        border-radius: 20px;
+        margin-bottom: 50px;
+      }
+
+      .search-container{
+        padding: 5px;
+      }
+
+      .card-img  {
+        width: 120px;
+        height: 120px;
+        border-radius: 20px;
+      }
+
+      .card-detail{
+        .title{
+          font-size: x-large;
+        }
+
+        .detail{
+          display: flex;
+          flex-direction: column;
+          padding-top: 5px;
+          .detail-box{
+            display: inline-flex;
+            padding-bottom: 5px;
+          }
+        }
+      }
+
+      .card-bottom{
+        padding-top: 18px;
+      }
+    }
+  }
+
+  .mat-slider-horizontal {
+    min-width: 200px;
+  }
+}

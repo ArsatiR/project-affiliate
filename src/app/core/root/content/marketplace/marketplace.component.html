@@ -1,0 +1,131 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="column">
+      <div class="search-box">
+        <!-- <mat-form-field appearance="fill">
+          <mat-label>Kecamatan</mat-label>
+          <mat-select>
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+        <!-- <mat-form-field appearance="fill">
+          <mat-label>Kota</mat-label>
+          <mat-select>
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+        <!-- <mat-form-field appearance="fill">
+          <mat-label>Provinsi</mat-label>
+          <mat-select>
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+        <mat-form-field appearance="fill">
+          <mat-label>Tipe Dagang</mat-label>
+          <mat-select>
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="slider-box">
+          Commision Range
+          <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" min="1" max="100000"></mat-slider>
+        </div>
+        <!-- <div class="slider-box">
+          Payout Range
+          <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" min="1" max="100000"></mat-slider>
+        </div> -->
+        <div class="slider-box">
+          Total Penjualan
+          <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" min="1" max="100000"></mat-slider>
+        </div>
+        <!-- <div class="slider-box">
+          Total Penjual
+          <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" min="1" max="100000"></mat-slider>
+        </div> -->
+      </div>
+    </div>
+    <div class="column">
+      <div class="content-box">
+        <div id="search-box">
+          <div class="search-wrapper">
+            <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+              <input class="form-control" type="text" name="search" #filter placeholder="Search" />
+            </div>
+          </div>
+          <div class="example-button-container" style="margin-top: 5px; margin-left: 42px">
+            <button mat-mini-fab color="accent" aria-label="Example icon button with a menu icon">
+              <mat-icon>search</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="main-search">
+          <div class="search-card">
+            <div class="search-container">
+              <div class="row">
+                <div class="col-3">
+                  <img class="card-img" src="../../../../../assets/imageKosong.png" alt="" />
+                </div>
+                <div class="col-9 card-detail">
+                  <div class="title">
+                    <span>Sepeda Gunung</span>
+                  </div>
+                  <div class="detail">
+                    <div class="detail-box">
+                      <mat-icon>description</mat-icon>
+                      <span> Sepeda Untuk Berpergian</span>
+                    </div>
+                    <div class="detail-box">
+                      <mat-icon>sell</mat-icon>
+                      <span> 1.000.000</span>
+                    </div>
+                    <div class="detail-box">
+                      <mat-icon>assessment</mat-icon>
+                      <span> 5</span>
+                    </div>
+                    <div class="detail-box">
+                      <mat-icon>monetization_on</mat-icon>
+                      <span> 5%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-bottom">
+                <div class="row">
+                  <div class="col-10">
+                    
+                    <mat-chip-list>
+                      <mat-chip color="primary" selected>Persediaan</mat-chip>
+                      <!-- <mat-chip color="accent" selected>Kembangan</mat-chip> -->
+                      <!-- <mat-chip color="accent" selected>Jakarta Barat</mat-chip> -->
+                      <!-- <mat-chip color="warn" selected>DKI Jakarta</mat-chip> -->
+                    </mat-chip-list>
+                  </div>
+                  <div class="col-2">
+                    <div class="promotion-button">
+                      <button mat-flat-button color="primary" (click)="openDialogPromotion()">Promosi</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="search-card"></div>
+          <div class="search-card"></div>
+          <div class="search-card"></div>
+          <div class="search-card"></div>
+          <div class="search-card"></div>
+          <div class="search-card"></div>
+          <div class="search-card"></div>
+          <div class="search-card"></div>
+          <div class="search-card"></div>
+          <div class="search-card"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

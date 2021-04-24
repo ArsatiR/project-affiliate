@@ -11,12 +11,12 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   isDisabled = false
 
-  ELEMENT = [
-    'Home',
-    'Referral',
-    'Komisi'
-  ]
-  @ViewChild('snav') snav: MatDrawer
+  ELEMENT:any = [
+    {name: 'Marketplace', route: '/marketplace'},
+    {name: 'Referral', route: '/referral'},
+    {name: 'Commission', route: '/commission'},
+  ];
+  @ViewChild('drawer') drawer: MatDrawer
 
   constructor(private freqData: FrequentDataService) { }
 
@@ -36,7 +36,7 @@ export class RootComponent implements OnInit, AfterViewInit {
   switchUserMode(logger:any){
     if(logger){
       this.isDisabled = true
-      this.snav.open()
+      this.drawer.open()
     }
   }
 

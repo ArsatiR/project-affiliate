@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MarketplaceComponent } from './marketplace.component';
+import { CommissionComponent } from './commission.component';
 import { SharedModule } from 'src/app/core/modules/shared.module';
 import { RouterModule, Routes } from '@angular/router';
-import { PromotionPopupComponent } from '../promotion-popup/promotion-popup.component';
 
 const routes: Routes =[
   {
-    path: 'marketplace',
-    component: MarketplaceComponent
+    path: 'commission',
+    component: CommissionComponent
   }
 ]
 
@@ -18,9 +17,9 @@ const routes: Routes =[
     SharedModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [MarketplaceComponent, PromotionPopupComponent],
+  declarations: [CommissionComponent],
   entryComponents: [
-    PromotionPopupComponent
+
   ]
 })
-export class MarketplaceModule { }
+export class CommissionModule { }

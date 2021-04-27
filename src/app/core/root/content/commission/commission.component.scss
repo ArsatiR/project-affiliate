@@ -1,4 +1,5 @@
 
+
 .content-box {
   margin: 15px 0px 0px 20px;
   width: 980px;
@@ -8,39 +9,88 @@
   box-sizing: inherit;
   overflow: auto;
 
-  .commission-box{
+  .calender-container {
+    margin: 15px 0px 0px 20px;
+    .search-wrapper {
+      width: 100%;
+      max-width: 273px;
+      border-radius: 28px;
+      overflow: hidden;
+      background-color: #ffffff !important;
+      border: solid 0.5px;
+      border-color: rgba(0, 0, 0, 0.12) !important;
+
+      // @include mat-elevation(1);
+      // @include media-breakpoint('xs') {
+      //     width: 100%;
+      // }
+      .search {
+        width: 100%;
+        height: 48px;
+        line-height: normal;
+        padding: 0 18px;
+        display: inline-flex;
+        input {
+          width: 100%;
+          height: 48px;
+          min-height: 48px;
+          max-height: 48px;
+          padding: 0 16px;
+          border: none;
+          outline: none;
+        }
+      }
+    }
+  }
+
+  .commission-box {
     padding-top: 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    .box{
-      padding-top: 10px;
+    .box {
+      margin-top: 15px;
     }
-    .chart-line-container{
+
+    .chart-block-container {
       width: 801px;
-        height: 253px;
-        background: #FFFFFF;
-        border-radius: 20px;
+      // height: 253px;
+      background: #FFFFFF;
+      border-radius: 20px;
     }
-    .table-commission-container{
+
+    .table-merchant-container {
+      .table-order {
+        width: -webkit-fill-available;
+      }
+
       width: 801px;
-        height: 253px;
-        background: #FFFFFF;
-        border-radius: 20px;
+      height: 253px;
+      background: #FFFFFF;
+      border-radius: 20px;
     }
-    .chart-block-container{
-      width: 801px;
-        height: 253px;
-        background: #FFFFFF;
-        border-radius: 20px;
+
+    .saldo-container {
+      // width: 290px;
+      // height: 67px;
+      background: #FFFFFF;
+      border-radius: 20px;
+      .saldo{
+        padding: 20px 100px;
+        font-size: xx-large;
+      }
     }
-    .table-merchant-container{
-      width: 801px;
-        height: 253px;
-        background: #FFFFFF;
-        border-radius: 20px;
+
+    .btn-tarik-container{
+      padding-bottom: 20px;
+      .mat-raised-button{
+        width: 290px;
+        height: 67px;
+      }
     }
+
+
   }
 
 

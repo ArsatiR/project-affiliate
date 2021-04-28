@@ -1,0 +1,46 @@
+.edit-profile {
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
+  align-items: center;
+  // padding-top: 24px;
+  // height: 750px;
+
+  .title {
+    font-size: x-large;
+    padding: 20px 0px;
+  }
+
+  .search-card {
+    min-width: 501px;
+    min-height: 415px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    margin-bottom: 50px;
+  }
+
+  .search-container {
+    padding: 5px;
+  }
+
+  .card-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 20px;
+  }
+
+  .card-detail {
+
+
+    .detail {
+      display: flex;
+      flex-direction: column;
+      padding-top: 5px;
+
+      .detail-box {
+        display: inline-flex;
+        padding-bottom: 5px;
+      }
+    }
+  }
+}

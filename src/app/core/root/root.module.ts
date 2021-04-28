@@ -9,6 +9,8 @@ import { FrequentDataService } from '../services/frequent-data.service';
 import { ReferralModule } from './content/referral/referral.module';
 import { MarketplaceModule } from './content/marketplace/marketplace.module';
 import { CommissionModule } from './content/commission/commission.module';
+import { AppDataService } from '../services/app-data.service';
+import { EditProfileModule } from './content/edit-profile/edit-profile.module';
 
 @NgModule({
   exports: [
@@ -21,14 +23,16 @@ import { CommissionModule } from './content/commission/commission.module';
     NavbarModule,
     ReferralModule,
     MarketplaceModule,
-    CommissionModule
+    CommissionModule,
+    EditProfileModule
   ],
   declarations: [
     RootComponent,
     ContentComponent
   ],
   providers: [
-    FrequentDataService
+    FrequentDataService,
+    AppDataService
   ]
 })
 export class RootModule { }

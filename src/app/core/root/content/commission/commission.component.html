@@ -1,27 +1,77 @@
-
-
 <div class="container-fluid" style="display: flex;justify-content: center;">
+
+
 
   <div class="content-box">
 
+    <div fxLayout="row" fxLayoutAlign="space-between stretch">
+      <div fxLayout="column" fxLayoutAlign="space-between start" class="calender-container">
+        <div class="search-wrapper mx-32 mx-md-8" style="min-width: 267px;">
+          <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon style="size: 12px;" matPrefix>date_range</mat-icon>
+            <input matInput style=" font-size: small;" type="text" name="selectedRange" ngxDaterangepickerMd
+              [(ngModel)]="selectedRange" (ngModelChange)="dateChange($event)" [showCustomRangeLabel]="true"
+              [alwaysShowCalendars]="true" [linkedCalendars]="false" [ranges]="ranges" [showClearButton]="true"
+              [locale]="calendarLocale" [minDate]="minDate" [placeholder]="calendarPlaceholder"
+              [keepCalendarOpeningWithRange]="true" [minDate]="minDate" [maxDate]="maxDate" />
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="commission-box">
-      <div class="chart-line-container box">
-
-      </div>
-      <div class="table-commission-container box">
-
-      </div>
       <div class="chart-block-container box">
-
+        <div style="height: 420px;">
+          <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="chartData" [gradient]="gradient"
+            [xAxis]="xAxisLabel" [yAxis]="yAxisLabel" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [roundEdges]="true">
+          </ngx-charts-bar-vertical>
+        </div>
       </div>
       <div class="table-merchant-container box">
+        <table mat-table [dataSource]="dataSourceMerchant" class="mat-elevation-z8 table-order">
 
+          <ng-container matColumnDef="nama">
+            <th mat-header-cell *matHeaderCellDef> Nama Merchant </th>
+            <td mat-cell *matCellDef="let element"> {{element.nama}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="link">
+            <th mat-header-cell *matHeaderCellDef> Link </th>
+            <td mat-cell *matCellDef="let element"> {{element.link}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="pengunjung">
+            <th mat-header-cell *matHeaderCellDef> Pengunjung </th>
+            <td mat-cell *matCellDef="let element"> {{element.pengunjung}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="transaksi">
+            <th mat-header-cell *matHeaderCellDef> Transaksi </th>
+            <td mat-cell *matCellDef="let element"> {{element.transaksi}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="komisi">
+            <th mat-header-cell *matHeaderCellDef> Komisi </th>
+            <td mat-cell *matCellDef="let element"> {{element.komisi}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsMerchant"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsMerchant;"></tr>
+        </table>
+        <mat-paginator [pageSize]="3"></mat-paginator>
       </div>
       <div class="saldo-container box">
-
+        <div class="saldo">
+          <span>Rp. {{100000 | number}}</span>
+        </div>
       </div>
       <div class="btn-tarik-container box">
-
+        <button mat-raised-button color="primary">Tarik Komisi</button>
       </div>
 
     </div>

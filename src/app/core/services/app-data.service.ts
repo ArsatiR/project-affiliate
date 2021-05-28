@@ -109,4 +109,13 @@ export class AppDataService {
         return this.cookieService.check(this._accessToken);
     }
 
+    /**
+     * Check is user exists in cookies.
+     */
+    checkIsUserExists(){
+        return this.cookieService.check(this._userInfo);
+    }
+
+
+
 }

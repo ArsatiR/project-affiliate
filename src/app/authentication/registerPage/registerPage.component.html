@@ -10,60 +10,109 @@
       <div class="tab-content">
         <div class="tab-pane fade show active" aria-labelledby="home-tab">
           <h3 class="register-heading">Apply as a Promoter</h3>
-          <div class="row register-form">
+          <!-- <div> -->
+          <form class="row register-form" name="registerForm" [formGroup]="registerForm">
             <div class="col-md-6">
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Full Name *" value="" />
+                <mat-form-field>
+                  <input matInput placeholder="Name" class="form-control" formControlName="name">
+                  <mat-error
+                    *ngIf="registerForm.get('name').hasError('required') && (registerForm.get('name').dirty || registerForm.get('name').touched)">
+                    Name is required
+                  </mat-error>
+                </mat-form-field>
               </div>
               <!-- <div class="form-group">
                 <input type="text" class="form-control" placeholder="Last Name *" value="" />
               </div> -->
               <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password *" value="" />
+                <mat-form-field>
+                  <input matInput [type]="hidePass ?
+                    'password' : 'text'" placeholder="Password *" class="form-control" formControlName="password">
+                  <mat-icon matSuffix (click)="hidePass = !hidePass">{{hidePass ? 'visibility' :
+                      'visibility_off'}}</mat-icon>
+                  <mat-error
+                    *ngIf="registerForm.get('password').hasError('required') && (registerForm.get('password').dirty || registerForm.get('password').touched)">
+                    Password is required
+                  </mat-error>
+                </mat-form-field>
               </div>
               <div class="form-group">
-                <input type="password" class="form-control" placeholder="Confirm Password *" value="" />
+                <mat-form-field>
+                  <input matInput placeholder="Confirm Password" class="form-control" [type]="hideCPass ?
+                    'password' : 'text'" formControlName="confirmPassword" [errorStateMatcher]="matcher">
+                  <mat-icon matSuffix (click)="hideCPass = !hideCPass">{{hideCPass ? 'visibility' :
+                      'visibility_off'}}</mat-icon>
+                  <mat-error
+                    *ngIf="registerForm.get('confirmPassword').hasError('required') && (registerForm.get('confirmPassword').dirty || registerForm.get('confirmPassword').touched)">
+                    Confirm Password is required
+                  </mat-error>
+                  <mat-error *ngIf="registerForm.hasError('notSame')">
+                    Passwords do not match
+                  </mat-error>
+                </mat-form-field>
               </div>
               <div class="form-group">
-                <div class="maxl">
-                  <label class="radio inline">
-                    <input type="radio" name="gender" value="male" checked>
-                    <span> Male </span>
-                  </label>
-                  <label class="radio inline">
-                    <input type="radio" name="gender" value="female">
-                    <span>Female </span>
-                  </label>
-                </div>
+                <mat-radio-group formControlName="gender" aria-label="Select gender">
+                  <mat-radio-button value="Male">Male</mat-radio-button>
+                  <mat-radio-button value="Female">Female</mat-radio-button>
+                  <mat-error
+                    *ngIf="registerForm.get('gender').hasError('required') && (registerForm.get('gender').dirty || registerForm.get('gender').touched)">
+                    Email is required
+                  </mat-error>
+                </mat-radio-group>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <input type="email" class="form-control" placeholder="Your Email *" value="" />
+                <mat-form-field>
+                  <input matInput type="email" placeholder="Email" class="form-control" formControlName="email"
+                    email="true">
+                  <mat-error
+                    *ngIf="registerForm.get('email').hasError('required') && (registerForm.get('email').dirty || registerForm.get('email').touched)">
+                    Email is required
+                  </mat-error>
+                  <mat-error
+                    *ngIf="registerForm.get('email').hasError('email') && (registerForm.get('email').dirty || registerForm.get('email').touched)">
+                    Unexpected Email format
+                  </mat-error>
+                </mat-form-field>
               </div>
               <div class="form-group">
-                <input type="text" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control"
-                  placeholder="Your Phone *" value="" />
+                <mat-form-field appearance="fill">
+                  <textarea matInput placeholder="Your Address*" formControlName="address"></textarea>
+                  <mat-error
+                  *ngIf="registerForm.get('address').hasError('required') && (registerForm.get('address').dirty || registerForm.get('address').touched)">
+                  Address is required
+                </mat-error>
+                </mat-form-field>
               </div>
               <div class="form-group">
-                <input type="date" name="birth" class="form-control"
-                  placeholder="Your Birth *" value="" />
+                <mat-form-field>
+                  <input matInput type="text" minlength="12" maxlength="12" placeholder="Your Phone *"
+                    class="form-control" formControlName="phone">
+                  <mat-error
+                    *ngIf="registerForm.get('phone').hasError('required') && (registerForm.get('phone').dirty || registerForm.get('phone').touched)">
+                    Phone is required
+                  </mat-error>
+                </mat-form-field>
+
               </div>
-              <!-- <div class="form-group">
-                <select class="form-control">
-                  <option class="hidden" selected disabled>Please select your Sequrity Question</option>
-                  <option>What is your Birthdate?</option>
-                  <option>What is Your old Phone Number</option>
-                  <option>What is your Pet Name?</option>
-                </select>
-              </div> -->
-              <!-- <div class="form-group">
-                <input type="text" class="form-control" placeholder="Enter Your Answer *" value="" />
-              </div> -->
-              <input type="submit" class="btnCancel" value="Cancel" (click)="cancelOnClick()" />
-              <input type="submit" class="btnRegister" value="Register"  />
+              <div class="form-group">
+                <mat-form-field>
+                  <input matInput type="date" placeholder="Your Birth *" class="form-control" formControlName="dob">
+                  <mat-error
+                    *ngIf="registerForm.get('dob').hasError('required') && (registerForm.get('dob').dirty || registerForm.get('dob').touched)">
+                    Date of Birth is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <input type="button" class="btnCancel" value="Cancel" (click)="cancelOnClick()" />
+              <input type="submit" class="btnRegister" value="Register" (click)="submitRegistration()" />
             </div>
-          </div>
+          </form>
+          <!-- </div> -->
         </div>
       </div>
     </div>

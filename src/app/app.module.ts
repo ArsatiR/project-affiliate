@@ -10,6 +10,8 @@ import {  RouterModule, Routes } from '@angular/router';
 import { HomepageComponent } from './main/homepage/homepage.component';
 // import { MarketplaceComponent } from './core/root/content/marketplace/marketplace.component';
 import { RegisterPageComponent } from './authentication/registerPage/registerPage.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
 const routes: Routes = [
   {
@@ -36,8 +38,12 @@ const routes: Routes = [
   imports: [
     SharedModule,
     BrowserModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {
+      onSameUrlNavigation: 'reload'
+    }),
     BrowserAnimationsModule,
+    HttpClientModule,
+    HttpModule,
     HomepageModule,
     RegisterPageModule,
     RootModule

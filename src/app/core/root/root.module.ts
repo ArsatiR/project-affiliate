@@ -11,6 +11,8 @@ import { MarketplaceModule } from './content/marketplace/marketplace.module';
 import { CommissionModule } from './content/commission/commission.module';
 import { AppDataService } from '../services/app-data.service';
 import { EditProfileModule } from './content/edit-profile/edit-profile.module';
+import { RestApiConnectorService } from '../services/restapi-connector.service';
+import { DataManipulateService } from '../services/data-manipulate-service';
 
 @NgModule({
   exports: [
@@ -24,7 +26,8 @@ import { EditProfileModule } from './content/edit-profile/edit-profile.module';
     ReferralModule,
     MarketplaceModule,
     CommissionModule,
-    EditProfileModule
+    EditProfileModule,
+
   ],
   declarations: [
     RootComponent,
@@ -32,7 +35,9 @@ import { EditProfileModule } from './content/edit-profile/edit-profile.module';
   ],
   providers: [
     FrequentDataService,
-    AppDataService
+    AppDataService,
+    RestApiConnectorService,
+    DataManipulateService
   ]
 })
 export class RootModule { }

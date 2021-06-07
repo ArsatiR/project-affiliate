@@ -4,6 +4,7 @@ import { MarketplaceComponent } from './marketplace.component';
 import { SharedModule } from 'src/app/core/modules/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { PromotionPopupComponent } from '../promotion-popup/promotion-popup.component';
+import { MarketplaceService } from './marketplace.service';
 
 const routes: Routes =[
   {
@@ -17,6 +18,9 @@ const routes: Routes =[
     CommonModule,
     SharedModule,
     RouterModule.forChild(routes)
+  ],
+  providers:[
+    MarketplaceService
   ],
   declarations: [MarketplaceComponent, PromotionPopupComponent],
   entryComponents: [

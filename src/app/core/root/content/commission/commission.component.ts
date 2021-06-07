@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import * as moment from "moment";
 import { Moment } from "moment";
 import { LocaleConfig } from "ngx-daterangepicker-material";
+import { AppDataService } from 'src/app/core/services/app-data.service';
+import { CommissionService } from './commission.service';
 
 @Component({
   selector: 'app-commission',
@@ -12,6 +14,10 @@ import { LocaleConfig } from "ngx-daterangepicker-material";
   styleUrls: ['./commission.component.scss']
 })
 export class CommissionComponent implements OnInit {
+
+  user:any
+  balance = 0;
+
   //calender
   moment = moment;
   calendarLocale: LocaleConfig;
@@ -45,14 +51,17 @@ export class CommissionComponent implements OnInit {
   gradient = false;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Nama Merchant';
+  xAxisLabel = 'Merchant Name';
   showYAxisLabel = true;
-  yAxisLabel = 'Total Komisi';
+  yAxisLabel = 'Total Commission';
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
-  constructor() {
+  constructor(
+    private commissionService: CommissionService,
+    private appDataService: AppDataService
+  ) {
     this.calendarLocale = {
       customRangeLabel: "Pick a date...",
       applyLabel: "Apply",
@@ -90,16 +99,38 @@ export class CommissionComponent implements OnInit {
     this.minDate = moment().subtract(10, "years");
     this.maxDate = moment().clone().add(10, "years");
 
-    this.chartData = CHART_DATA
   }
 
   ngOnInit() {
-
-    this.setDataSource()
+    this.user = this.appDataService.getUserInfoWithoutPromise()
     this.selectedRange = {
       startDate: moment(this.dateNow.format("YYYY-MM-DD")),
       endDate: moment(this.dateNow.format("YYYY-MM-DD")),
     };
+    this.getUserBalance();
+  }
+
+  async getAllData(dateStart, dateEnd){
+    let data = await this.commissionService.getCommissionSummary(this.user.id, dateStart, dateEnd)
+    this.setDataSource(data)
+    this.getChartData(data)
+  }
+
+  getChartData(data){
+    let arrTemp = []
+    data.forEach((element)=>{
+      arrTemp.push({
+        name: element.storeOrPromoterName,
+        value: element.totalCommissionAmount,
+      })
+    })
+    this.chartData = arrTemp;
+
+  }
+
+  async getUserBalance(){
+    const temp = await this.commissionService.getPromoterBalance(this.user.id)
+    this.balance = temp;
   }
 
   dateChange($event) {
@@ -107,12 +138,12 @@ export class CommissionComponent implements OnInit {
     this.selectedRange = $event;
 
     if (startDate && endDate) {
-
+      this.getAllData(startDate.format("YYYY-MM-DD"), endDate.format("YYYY-MM-DD"))
     }
   }
 
-  setDataSource(){
-    this.dataSourceMerchant = new MatTableDataSource(ELEMENT_DATA);
+  setDataSource(data){
+    this.dataSourceMerchant = new MatTableDataSource(data);
     this.dataSourceMerchant.paginator = this.paginator;
     this.dataSourceMerchant.sort = this.sort
   }

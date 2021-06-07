@@ -12,27 +12,29 @@
               <span>Auto Generate Code</span>
               <div class="search-wrapper mx-32 mx-md-8" style="min-width: 400px;">
                 <div class="search">
-                  <input type="text" name="search" #filter placeholder="" />
-                  <button mat-flat-button color="primary">Aktif</button>
+                  <input type="text" name="search" #filter [(ngModel)]="data.referralBySystem" disabled />
+                  <button *ngIf="data.status == 1" mat-flat-button color="primary">Active</button>
+                  <button *ngIf="data.status == 2" mat-flat-button (click)="setStatus(1)" color="warn">Inactive</button>
                 </div>
               </div>
             </div>
             <div class="button-code">
-              <button mat-stroked-button>Generate Ulang</button>
+              <button mat-stroked-button (click)="regenerateCode()">Regenerate Code</button>
             </div>
           </div>
           <div class="wrapper">
             <div class="code">
-              <span>Kode Manual</span>
+              <span>Manual Code</span>
               <div class="search-wrapper mx-32 mx-md-8" style="min-width: 400px;">
                 <div class="search">
-                  <input type="text" name="search" #filter placeholder="" />
-                  <button mat-flat-button color="warn">Tidak Aktif</button>
+                  <input type="text" name="search" #filter [(ngModel)]="data.referralByUser" placeholder="ex. budi12xyz" />
+                  <button *ngIf="data.status == 2" mat-flat-button color="primary">Active</button>
+                  <button *ngIf="data.status == 1" mat-flat-button (click)="setStatus(2)" color="warn">inactive</button>
                 </div>
               </div>
             </div>
             <div class="button-code">
-              <button mat-stroked-button>Check</button>
+              <button mat-stroked-button (click)="setManualCode()">Check & Save</button>
             </div>
           </div>
         </div>
@@ -44,26 +46,26 @@
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-order">
 
           <ng-container matColumnDef="halaman">
-            <th mat-header-cell *matHeaderCellDef> Halaman Promosi </th>
-            <td mat-cell *matCellDef="let element"> {{element.halaman}} </td>
+            <th mat-header-cell *matHeaderCellDef> Promotion Page </th>
+            <td mat-cell *matCellDef="let element"> {{element.peripheralLink}} </td>
           </ng-container>
 
 
           <ng-container matColumnDef="tanggal">
-            <th mat-header-cell *matHeaderCellDef> Tanggal </th>
-            <td mat-cell *matCellDef="let element"> {{element.tanggal}} </td>
+            <th mat-header-cell *matHeaderCellDef> Expired Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.duration | date}} </td>
           </ng-container>
 
 
           <ng-container matColumnDef="pengunjung">
-            <th mat-header-cell *matHeaderCellDef> Pengunjung </th>
-            <td mat-cell *matCellDef="let element"> {{element.pengunjung}} </td>
+            <th mat-header-cell *matHeaderCellDef> Views </th>
+            <td mat-cell *matCellDef="let element"> {{element.clickCounter}} </td>
           </ng-container>
 
 
           <ng-container matColumnDef="transaksi">
-            <th mat-header-cell *matHeaderCellDef> Transaksi </th>
-            <td mat-cell *matCellDef="let element"> {{element.transaksi}} </td>
+            <th mat-header-cell *matHeaderCellDef> Transactions </th>
+            <td mat-cell *matCellDef="let element"> {{element.totalTransaction}} </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

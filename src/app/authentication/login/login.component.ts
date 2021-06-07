@@ -41,14 +41,19 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.errors == null) {
       const loginData = this.loginForm.getRawValue()
       await this.loginService.login(loginData.email, loginData.password).then((result) => {
-        if (result) {
-          this.snackBar.open(result.message, 'Ok', {
+        if (result.id != null) {
+          this.snackBar.open("Welcome..", 'Ok', {
             verticalPosition: 'top',
             duration: 5000
           });
           this.appDataService.setUserInfo(result)
           this.appDataService.setAccessToken('aktif', 360000)
           this.router.navigateByUrl('/marketplace')
+        }else{
+          this.snackBar.open("Email or Password isn't correct", 'Ok', {
+            verticalPosition: 'top',
+            duration: 5000
+          });
         }
       })
 

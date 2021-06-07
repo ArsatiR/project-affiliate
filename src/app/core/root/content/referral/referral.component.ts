@@ -1,8 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { AppDataService } from 'src/app/core/services/app-data.service';
+import { ReferralService } from './referral.service';
 
 @Component({
   selector: 'app-referral',
@@ -10,6 +13,9 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./referral.component.scss']
 })
 export class ReferralComponent implements OnInit {
+
+  user:any
+  data:any
 
   //table
   dataSource:MatTableDataSource<referral>
@@ -27,14 +33,83 @@ export class ReferralComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  constructor() { }
+  constructor(
+    private referralService: ReferralService,
+    private appDataService: AppDataService,
+    private snackBar: MatSnackBar
+  ) {
+    this.dataSource = new MatTableDataSource([])
+   }
 
   ngOnInit() {
-    this.setDataSource()
+    this.user = this.appDataService.getUserInfoWithoutPromise()
+    this.getAllData()
   }
 
-  setDataSource(){
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+  async getAllData(){
+    await this.referralService.getByPromoter(this.user.id).then((data)=>{
+      this.data = data
+    })
+    let listData = await this.referralService.getAllByPromoter(this.user.id)
+    this.setDataSource(listData)
+  }
+
+  refreshCode(){
+
+  }
+
+  async setStatus(status){
+    await this.referralService.changeStatus(this.user.id, status).then((result)=>{
+      if(result){
+        this.snackBar.open(result, 'Ok', {
+          verticalPosition: 'top',
+          duration: 5000
+        });
+        this.data.status = status
+      }else{
+        this.snackBar.open("Error..", 'Ok', {
+          verticalPosition: 'top',
+          duration: 5000
+        });
+      }
+    })
+  }
+
+  async regenerateCode(){
+    await this.referralService.getGeneratedBySystem(this.user.id).then((result)=>{
+      if(result){
+        this.snackBar.open("Generate Code Success", 'Ok', {
+          verticalPosition: 'top',
+          duration: 5000
+        });
+        this.data.referralBySystem = result
+      }else{
+        this.snackBar.open("Error..", 'Ok', {
+          verticalPosition: 'top',
+          duration: 5000
+        });
+      }
+    });
+  }
+
+  async setManualCode(){
+    await this.referralService.getGeneratedByUser(this.data.referralByUser, this.user.id).then((result)=>{
+      if(result){
+        this.snackBar.open(result, 'Ok', {
+          verticalPosition: 'top',
+          duration: 5000
+        });
+      }else{
+        this.snackBar.open(result, 'Ok', {
+          verticalPosition: 'top',
+          duration: 5000
+        });
+      }
+    });
+  }
+
+  setDataSource(data){
+    this.dataSource = new MatTableDataSource(data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort
   }

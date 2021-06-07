@@ -5,6 +5,7 @@ import { SharedModule } from 'src/app/core/modules/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { CommissionService } from './commission.service';
 
 const routes: Routes =[
   {
@@ -22,6 +23,9 @@ const routes: Routes =[
     NgxDaterangepickerMd.forRoot()
   ],
   declarations: [CommissionComponent],
+  providers: [
+    CommissionService
+  ],
   entryComponents: [
 
   ]

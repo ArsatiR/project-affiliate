@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MarketplaceService } from '../marketplace/marketplace.service';
 
 @Component({
   selector: 'app-promotion-popup',
@@ -9,11 +11,17 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class PromotionPopupComponent implements OnInit {
 
+  affiliateLink:string
+
   constructor(
     public dialogRef: MatDialogRef<PromotionPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private marketPlaceService: MarketplaceService,
+    private snackBar: MatSnackBar
+    ) { }
 
   ngOnInit() {
+    this.affiliateLink = this.data
   }
 
 }

@@ -24,23 +24,40 @@
           </mat-select>
         </mat-form-field> -->
         <mat-form-field appearance="fill">
-          <mat-label>Tipe Dagang</mat-label>
-          <mat-select>
-            <mat-option value="one">First option</mat-option>
-            <mat-option value="two">Second option</mat-option>
+          <mat-label>Item Type</mat-label>
+          <mat-select [(ngModel)]="typeSales" >
+            <mat-option *ngFor="let type of listType" value="{{ type.name }}">{{
+              type.name
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
         <div class="slider-box">
-          Commision Range
-          <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" min="1" max="100000"></mat-slider>
+          Commission with
+          <br>
+          <mat-radio-group [(ngModel)]="commissionStatus" (change)="changeStatus()" aria-label="Select an option">
+            <mat-radio-button [value]="1">%</mat-radio-button>
+            <mat-radio-button [value]="2">Rp.</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="slider-box">
+          Commision Range: {{sliderCommission}}
+          <ng-container *ngIf="commissionStatus == 2;else status2">
+            <mat-slider thumbLabel [displayWith]="formatLabelKomisi" tickInterval="1000" min="1" max="1000000"
+            [(ngModel)]="sliderCommission"></mat-slider>
+          </ng-container>
+          <ng-template #status2>
+            <mat-slider thumbLabel [displayWith]="formatLabelKomisiPercent" tickInterval="1" min="1" max="100"
+            [(ngModel)]="sliderCommission"></mat-slider>
+          </ng-template>
         </div>
         <!-- <div class="slider-box">
           Payout Range
           <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" min="1" max="100000"></mat-slider>
         </div> -->
         <div class="slider-box">
-          Total Penjualan
-          <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" min="1" max="100000"></mat-slider>
+          Total Transaction: {{sliderTransaction}}
+          <mat-slider thumbLabel [displayWith]="formatLabelPenjualan" tickInterval="10" min="1" max="1000"
+          [(ngModel)]="sliderTransaction"></mat-slider>
         </div>
         <!-- <div class="slider-box">
           Total Penjual
@@ -53,353 +70,91 @@
         <div id="search-box">
           <div class="search-wrapper">
             <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
-              <input class="form-control" type="text" name="search" #filter placeholder="Search" />
+              <input class="form-control" type="text" name="search" [(ngModel)]="search" #filter
+                placeholder="Search" />
             </div>
           </div>
           <div class="example-button-container" style="margin-top: 5px; margin-left: 42px">
-            <button mat-mini-fab color="accent" aria-label="Example icon button with a menu icon">
+            <button mat-mini-fab color="accent" aria-label="Example icon button with a menu icon"
+              (click)="loadAdvanceFilter()">
               <mat-icon>search</mat-icon>
             </button>
           </div>
         </div>
 
         <div class="main-search">
-          <div class="search-card">
-            <div class="search-container">
-              <div class="row">
-                <div class="col-3">
-                  <img class="card-img" src="../../../../../assets/imageKosong.png" alt="" />
-                </div>
-                <div class="col-9 card-detail">
-                  <div class="title">
-                    <span>Sepeda Gunung</span>
-                  </div>
-                  <div class="detail">
-                    <div class="detail-box">
-                      <mat-icon>description</mat-icon>
-                      <span> Sepeda Untuk Berpergian</span>
-                    </div>
-                    <div class="detail-box">
-                      <mat-icon>sell</mat-icon>
-                      <span> 1.000.000</span>
-                    </div>
-                    <div class="detail-box">
-                      <div class="left">
-                        <mat-icon>assessment</mat-icon>
-                        <span> 5</span>
-                      </div>
-                      <div class="rigth">
-                        <mat-icon>visibility</mat-icon>
-                        <span> 20</span>
-                      </div>
-                    </div>
-                    <div class="detail-box">
-                      <mat-icon>monetization_on</mat-icon>
-                      <span> 5%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-bottom">
+          <ng-container *ngFor="let item of listData">
+            <div class="search-card">
+              <div class="search-container">
                 <div class="row">
-                  <div class="col-10">
-
-                    <mat-chip-list>
-                      <mat-chip color="primary" selected>Persediaan</mat-chip>
-                      <!-- <mat-chip color="accent" selected>Kembangan</mat-chip> -->
-                      <!-- <mat-chip color="accent" selected>Jakarta Barat</mat-chip> -->
-                      <!-- <mat-chip color="warn" selected>DKI Jakarta</mat-chip> -->
-                    </mat-chip-list>
+                  <div class="col-3">
+                    <img class="card-img" [src]="item.imageUrl" alt="" />
                   </div>
-                  <div class="col-2">
-                    <div class="promotion-button">
-                      <button mat-flat-button color="primary" (click)="openDialogPromotion()">Promosi</button>
+                  <div class="col-9 card-detail">
+                    <div class="title">
+                      <span matTooltip="Item Name">{{ item.name }}</span>
+                    </div>
+                    <div class="detail">
+                      <div class="detail-box">
+                        <div class="wrapper" matTooltip="Description">
+                          <mat-icon>description</mat-icon>
+                          <span> {{ item.desc }}</span>
+                        </div>
+                      </div>
+                      <div class="detail-box">
+                        <div class="wrapper" matTooltip="Price">
+                          <mat-icon>sell</mat-icon>
+                          <span> {{ item.price }}</span>
+                        </div>
+                      </div>
+                      <div class="detail-box">
+                        <div class="left" matTooltip="Total Transaction">
+                          <mat-icon matTooltip>assessment</mat-icon>
+                          <span> {{ item.totalTranscation }}</span>
+                        </div>
+                        <div class="rigth" matTooltip="Total Views">
+                          <mat-icon>visibility</mat-icon>
+                          <span> 20</span>
+                        </div>
+                      </div>
+                      <div class="detail-box">
+                        <div class="left" matTooltip="Commission">
+                          <mat-icon>monetization_on</mat-icon>
+                          <span *ngIf="item.commissionStat == 1">
+                            Rp. {{ item.commision }}</span>
+                          <span *ngIf="item.commissionStat == 2">
+                            {{ item.commision }}%</span>
+                        </div>
+                        <div class="rigth" matTooltip="Duration">
+                          <mat-icon>timelapse</mat-icon>
+                          <span> {{item.durationDate | date}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-bottom">
+                  <div class="row">
+                    <div class="col-9">
+                      <mat-chip-list>
+                        <mat-chip color="primary" matTooltip="Item Type" selected>{{item.type}}</mat-chip>
+                        <!-- <mat-chip color="accent" selected>Kembangan</mat-chip> -->
+                        <!-- <mat-chip color="accent" selected>Jakarta Barat</mat-chip> -->
+                        <!-- <mat-chip color="warn" selected>DKI Jakarta</mat-chip> -->
+                      </mat-chip-list>
+                    </div>
+                    <div class="col-3">
+                      <div class="promotion-button">
+                        <button mat-flat-button color="primary" (click)="openDialogPromotion(item.id)">
+                          Promotion
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="search-card">
-            <div class="search-container">
-              <div class="row">
-                <div class="col-3">
-                  <img class="card-img" src="../../../../../assets/imageKosong.png" alt="" />
-                </div>
-                <div class="col-9 card-detail">
-                  <div class="title">
-                    <span>Sepeda Gunung</span>
-                  </div>
-                  <div class="detail">
-                    <div class="detail-box">
-                      <mat-icon>description</mat-icon>
-                      <span> Sepeda Untuk Berpergian</span>
-                    </div>
-                    <div class="detail-box">
-                      <mat-icon>sell</mat-icon>
-                      <span> 1.000.000</span>
-                    </div>
-                    <div class="detail-box">
-                      <div class="left">
-                        <mat-icon>assessment</mat-icon>
-                        <span> 5</span>
-                      </div>
-                      <div class="rigth">
-                        <mat-icon>visibility</mat-icon>
-                        <span> 20</span>
-                      </div>
-                    </div>
-                    <div class="detail-box">
-                      <mat-icon>monetization_on</mat-icon>
-                      <span> 5%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-bottom">
-                <div class="row">
-                  <div class="col-10">
-
-                    <mat-chip-list>
-                      <mat-chip color="primary" selected>Persediaan</mat-chip>
-                      <!-- <mat-chip color="accent" selected>Kembangan</mat-chip> -->
-                      <!-- <mat-chip color="accent" selected>Jakarta Barat</mat-chip> -->
-                      <!-- <mat-chip color="warn" selected>DKI Jakarta</mat-chip> -->
-                    </mat-chip-list>
-                  </div>
-                  <div class="col-2">
-                    <div class="promotion-button">
-                      <button mat-flat-button color="primary" (click)="openDialogPromotion()">Promosi</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="search-card">
-            <div class="search-container">
-              <div class="row">
-                <div class="col-3">
-                  <img class="card-img" src="../../../../../assets/imageKosong.png" alt="" />
-                </div>
-                <div class="col-9 card-detail">
-                  <div class="title">
-                    <span>Sepeda Gunung</span>
-                  </div>
-                  <div class="detail">
-                    <div class="detail-box">
-                      <mat-icon>description</mat-icon>
-                      <span> Sepeda Untuk Berpergian</span>
-                    </div>
-                    <div class="detail-box">
-                      <mat-icon>sell</mat-icon>
-                      <span> 1.000.000</span>
-                    </div>
-                    <div class="detail-box">
-                      <div class="left">
-                        <mat-icon>assessment</mat-icon>
-                        <span> 5</span>
-                      </div>
-                      <div class="rigth">
-                        <mat-icon>visibility</mat-icon>
-                        <span> 20</span>
-                      </div>
-                    </div>
-                    <div class="detail-box">
-                      <mat-icon>monetization_on</mat-icon>
-                      <span> 5%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-bottom">
-                <div class="row">
-                  <div class="col-10">
-
-                    <mat-chip-list>
-                      <mat-chip color="primary" selected>Persediaan</mat-chip>
-                      <!-- <mat-chip color="accent" selected>Kembangan</mat-chip> -->
-                      <!-- <mat-chip color="accent" selected>Jakarta Barat</mat-chip> -->
-                      <!-- <mat-chip color="warn" selected>DKI Jakarta</mat-chip> -->
-                    </mat-chip-list>
-                  </div>
-                  <div class="col-2">
-                    <div class="promotion-button">
-                      <button mat-flat-button color="primary" (click)="openDialogPromotion()">Promosi</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="search-card">
-            <div class="search-container">
-              <div class="row">
-                <div class="col-3">
-                  <img class="card-img" src="../../../../../assets/imageKosong.png" alt="" />
-                </div>
-                <div class="col-9 card-detail">
-                  <div class="title">
-                    <span>Sepeda Gunung</span>
-                  </div>
-                  <div class="detail">
-                    <div class="detail-box">
-                      <mat-icon>description</mat-icon>
-                      <span> Sepeda Untuk Berpergian</span>
-                    </div>
-                    <div class="detail-box">
-                      <mat-icon>sell</mat-icon>
-                      <span> 1.000.000</span>
-                    </div>
-                    <div class="detail-box">
-                      <div class="left">
-                        <mat-icon>assessment</mat-icon>
-                        <span> 5</span>
-                      </div>
-                      <div class="rigth">
-                        <mat-icon>visibility</mat-icon>
-                        <span> 20</span>
-                      </div>
-                    </div>
-                    <div class="detail-box">
-                      <mat-icon>monetization_on</mat-icon>
-                      <span> 5%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-bottom">
-                <div class="row">
-                  <div class="col-10">
-
-                    <mat-chip-list>
-                      <mat-chip color="primary" selected>Persediaan</mat-chip>
-                      <!-- <mat-chip color="accent" selected>Kembangan</mat-chip> -->
-                      <!-- <mat-chip color="accent" selected>Jakarta Barat</mat-chip> -->
-                      <!-- <mat-chip color="warn" selected>DKI Jakarta</mat-chip> -->
-                    </mat-chip-list>
-                  </div>
-                  <div class="col-2">
-                    <div class="promotion-button">
-                      <button mat-flat-button color="primary" (click)="openDialogPromotion()">Promosi</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="search-card">
-            <div class="search-container">
-              <div class="row">
-                <div class="col-3">
-                  <img class="card-img" src="../../../../../assets/imageKosong.png" alt="" />
-                </div>
-                <div class="col-9 card-detail">
-                  <div class="title">
-                    <span>Sepeda Gunung</span>
-                  </div>
-                  <div class="detail">
-                    <div class="detail-box">
-                      <mat-icon>description</mat-icon>
-                      <span> Sepeda Untuk Berpergian</span>
-                    </div>
-                    <div class="detail-box">
-                      <mat-icon>sell</mat-icon>
-                      <span> 1.000.000</span>
-                    </div>
-                    <div class="detail-box">
-                      <div class="left">
-                        <mat-icon>assessment</mat-icon>
-                        <span> 5</span>
-                      </div>
-                      <div class="rigth">
-                        <mat-icon>visibility</mat-icon>
-                        <span> 20</span>
-                      </div>
-                    </div>
-                    <div class="detail-box">
-                      <mat-icon>monetization_on</mat-icon>
-                      <span> 5%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-bottom">
-                <div class="row">
-                  <div class="col-10">
-
-                    <mat-chip-list>
-                      <mat-chip color="primary" selected>Persediaan</mat-chip>
-                      <!-- <mat-chip color="accent" selected>Kembangan</mat-chip> -->
-                      <!-- <mat-chip color="accent" selected>Jakarta Barat</mat-chip> -->
-                      <!-- <mat-chip color="warn" selected>DKI Jakarta</mat-chip> -->
-                    </mat-chip-list>
-                  </div>
-                  <div class="col-2">
-                    <div class="promotion-button">
-                      <button mat-flat-button color="primary" (click)="openDialogPromotion()">Promosi</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="search-card">
-            <div class="search-container">
-              <div class="row">
-                <div class="col-3">
-                  <img class="card-img" src="../../../../../assets/imageKosong.png" alt="" />
-                </div>
-                <div class="col-9 card-detail">
-                  <div class="title">
-                    <span>Sepeda Gunung</span>
-                  </div>
-                  <div class="detail">
-                    <div class="detail-box">
-                      <mat-icon>description</mat-icon>
-                      <span> Sepeda Untuk Berpergian</span>
-                    </div>
-                    <div class="detail-box">
-                      <mat-icon>sell</mat-icon>
-                      <span> 1.000.000</span>
-                    </div>
-                    <div class="detail-box">
-                      <div class="left">
-                        <mat-icon>assessment</mat-icon>
-                        <span> 5</span>
-                      </div>
-                      <div class="rigth">
-                        <mat-icon>visibility</mat-icon>
-                        <span> 20</span>
-                      </div>
-                    </div>
-                    <div class="detail-box">
-                      <mat-icon>monetization_on</mat-icon>
-                      <span> 5%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-bottom">
-                <div class="row">
-                  <div class="col-10">
-
-                    <mat-chip-list>
-                      <mat-chip color="primary" selected>Persediaan</mat-chip>
-                      <!-- <mat-chip color="accent" selected>Kembangan</mat-chip> -->
-                      <!-- <mat-chip color="accent" selected>Jakarta Barat</mat-chip> -->
-                      <!-- <mat-chip color="warn" selected>DKI Jakarta</mat-chip> -->
-                    </mat-chip-list>
-                  </div>
-                  <div class="col-2">
-                    <div class="promotion-button">
-                      <button mat-flat-button color="primary" (click)="openDialogPromotion()">Promosi</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </ng-container>
         </div>
       </div>
     </div>

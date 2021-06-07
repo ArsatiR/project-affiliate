@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DataManipulateService } from './data-manipulate-service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 
 /**
@@ -63,7 +63,7 @@ export class RestApiConnectorService {
      * @param http Performs http requests using XMLHttpRequest as the default backend.
      */
     constructor(protected manipulateService: DataManipulateService, protected snackBar: MatSnackBar,
-        protected cookieService: CookieService, protected appService: AppDataService, protected http: Http){
+        protected cookieService: CookieService, protected appService: AppDataService, protected http: Http, protected httpClient : HttpClient){
 
     }
 
@@ -183,7 +183,20 @@ export class RestApiConnectorService {
             extraParam = this.manipulateService.proccessDateQueryStringNeutralTimezone('dateStart', 'dateEnd', extraParam);
         }
 
-        return this.http.get(`${a}${path}?` + extraParam).pipe(
+        return this.httpClient.get(`${a}${path}?` + extraParam).pipe(
+          retry(1),
+          catchError(this.handleError)
+        )
+    }
+    getString(path: string, extraParam = ''): Observable<any> {
+        const a = this.ip;
+        // this.checkAndAssignAccessToken();
+
+        if (this.isUTCDateTimeQuery && extraParam !== '' && (extraParam.indexOf('dateStart') !== -1 || extraParam.indexOf('dateEnd') !== -1)) {
+            extraParam = this.manipulateService.proccessDateQueryStringNeutralTimezone('dateStart', 'dateEnd', extraParam);
+        }
+
+        return this.httpClient.get(`${a}${path}?` + extraParam,{responseType: 'text'}).pipe(
           retry(1),
           catchError(this.handleError)
         )
@@ -215,7 +228,7 @@ export class RestApiConnectorService {
         let url = `${a}${path}`;
 
 
-        return this.http.post(url, body, { headers: headers }).pipe(
+        return this.httpClient.post(url, body, { headers: headers }).pipe(
           retry(1),
           catchError(this.handleError)
         );

@@ -5,6 +5,7 @@ import { SharedModule } from '../../core/modules/shared.module';
 import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { NavbarModule } from '../navbar/navbar.module';
+import { LoginModule } from 'src/app/authentication/login/login.module';
 
 @NgModule({
   exports: [HomepageComponent],
@@ -12,7 +13,8 @@ import { NavbarModule } from '../navbar/navbar.module';
     CommonModule,
     SharedModule,
     NavbarModule,
-    RouterModule
+    RouterModule,
+    LoginModule
   ],
   declarations: [HomepageComponent, FooterComponent],
 })

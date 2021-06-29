@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -6,6 +7,7 @@ import * as moment from "moment";
 import { Moment } from "moment";
 import { LocaleConfig } from "ngx-daterangepicker-material";
 import { AppDataService } from 'src/app/core/services/app-data.service';
+import { MoneyConfirmPasswordComponent } from '../money-confirm-password/money-confirm-password.component';
 import { CommissionService } from './commission.service';
 
 @Component({
@@ -27,6 +29,9 @@ export class CommissionComponent implements OnInit {
   minDate: Moment;
   maxDate: Moment;
   dateNow = moment()
+
+  startDate:any;
+  endDate:any;
 
   //table
   dataSourceMerchant: MatTableDataSource<merchant>;
@@ -60,7 +65,8 @@ export class CommissionComponent implements OnInit {
 
   constructor(
     private commissionService: CommissionService,
-    private appDataService: AppDataService
+    private appDataService: AppDataService,
+    public dialog: MatDialog
   ) {
     this.calendarLocale = {
       customRangeLabel: "Pick a date...",
@@ -107,11 +113,12 @@ export class CommissionComponent implements OnInit {
       startDate: moment(this.dateNow.format("YYYY-MM-DD")),
       endDate: moment(this.dateNow.format("YYYY-MM-DD")),
     };
-    this.getUserBalance();
+
   }
 
   async getAllData(dateStart, dateEnd){
     let data = await this.commissionService.getCommissionSummary(this.user.id, dateStart, dateEnd)
+    this.getUserBalance();
     this.setDataSource(data)
     this.getChartData(data)
   }
@@ -136,7 +143,8 @@ export class CommissionComponent implements OnInit {
   dateChange($event) {
     const { startDate, endDate } = $event;
     this.selectedRange = $event;
-
+    this.startDate = startDate.format("YYYY-MM-DD")
+    this.endDate = endDate.format("YYYY-MM-DD")
     if (startDate && endDate) {
       this.getAllData(startDate.format("YYYY-MM-DD"), endDate.format("YYYY-MM-DD"))
     }
@@ -146,6 +154,19 @@ export class CommissionComponent implements OnInit {
     this.dataSourceMerchant = new MatTableDataSource(data);
     this.dataSourceMerchant.paginator = this.paginator;
     this.dataSourceMerchant.sort = this.sort
+  }
+
+  openDrawDialog(){
+    const dialogRef = this.dialog.open(MoneyConfirmPasswordComponent, {
+      width: '250px',
+      data: {balance: this.balance, userId: this.user.id}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result == 'success'){
+        this.getAllData(this.startDate, this.endDate)
+      }
+    });
   }
 
 }

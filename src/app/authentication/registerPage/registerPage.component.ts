@@ -46,7 +46,7 @@ export class RegisterPageComponent implements OnInit {
       address: ['', Validators.required],
       email: ['', [Validators.email, Validators.required]],
       gender: ['', Validators.required],
-      phone: ['', [Validators.maxLength(12), Validators.required]],
+      phone: [, [Validators.maxLength(12), Validators.required]],
       dob: ['', Validators.required]
     }, {validators: this.checkPasswords})
   }
@@ -67,12 +67,12 @@ export class RegisterPageComponent implements OnInit {
         email: registData.email,
         name: registData.name,
         password: registData.password,
-        phoneNumber: registData.phone,
+        phoneNumber: registData.phone.toString(),
         gender: registData.gender
       }
       await this.registerService.addUser(userSave).then((result)=>{
         if (result.status){
-          this.snackBar.open(result.message, 'Ok', {
+          this.snackBar.open("Success register..", 'Ok', {
             verticalPosition: 'top',
             duration: 5000
           });

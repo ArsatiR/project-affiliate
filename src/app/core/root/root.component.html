@@ -1,5 +1,9 @@
 <mat-drawer-container class="example-container" [hasBackdrop]="false">
   <mat-drawer #drawer mode="side" *ngIf="isUser" fixedTopGap="56" [disableClose]="true">
+    <div class="image-drawer" style="height: 89px;">
+      <img src="../../../assets/logoNavbar.png" alt="" width="130px">
+    </div>
+    <hr>
     <mat-nav-list>
       <a mat-list-item [routerLink]="[nav.route]" routerLinkActive="router-link-active"
         *ngFor="let nav of ELEMENT">{{ nav.name }}</a>
@@ -11,13 +15,19 @@
         <app-navbar *ngIf="!isUser"></app-navbar>
         <mat-toolbar *ngIf="isUser" color="primary" class="mat-elevation-z1">
 
+          <div fxLayout="row" fxLayoutAlign="space-between none" style="width: inherit;">
+
+
+            <div class="brand-toggle" style="display: inline-flex;">
+
               <button mat-icon-button (click)="drawer.toggle()">
                 <mat-icon>menu</mat-icon>
               </button>
 
-              <h1 class="example-app-name">Mimi Affiliate</h1>
+              <!-- <h1 class="example-app-name">Mimi Affiliate</h1> -->
+            </div>
 
-
+            <div class="profile-wrapper" style="display: inline-flex;">
 
               <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
                 <div fxLayout="row" fxLayoutAlign="center center">
@@ -41,7 +51,10 @@
                 </button>
 
               </mat-menu>
+            </div>
 
+
+          </div>
         </mat-toolbar>
       </header>
       <div class="content-wrapper">

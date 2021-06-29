@@ -89,7 +89,7 @@
               </div>
               <div class="form-group">
                 <mat-form-field>
-                  <input matInput type="text" minlength="12" maxlength="12" placeholder="Your Phone *"
+                  <input matInput type="number" minlength="12" maxlength="12" placeholder="Your Phone *"
                     class="form-control" formControlName="phone">
                   <mat-error
                     *ngIf="registerForm.get('phone').hasError('required') && (registerForm.get('phone').dirty || registerForm.get('phone').touched)">

@@ -6,12 +6,14 @@ import { HomepageModule } from './main/homepage/homepage.module';
 import { SharedModule } from './core/modules/shared.module';
 import { RegisterPageModule } from './authentication/registerPage/registerPage.module';
 import { RootModule } from './core/root/root.module';
-import {  RouterModule, Routes } from '@angular/router';
+import {  PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { HomepageComponent } from './main/homepage/homepage.component';
 // import { MarketplaceComponent } from './core/root/content/marketplace/marketplace.component';
 import { RegisterPageComponent } from './authentication/registerPage/registerPage.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AppDataService } from './core/services/app-data.service';
 
 const routes: Routes = [
   {
@@ -39,16 +41,20 @@ const routes: Routes = [
     SharedModule,
     BrowserModule,
     RouterModule.forRoot(routes, {
-      onSameUrlNavigation: 'reload'
+      onSameUrlNavigation: 'reload',
+      preloadingStrategy: PreloadAllModules
     }),
     BrowserAnimationsModule,
     HttpClientModule,
     HttpModule,
     HomepageModule,
     RegisterPageModule,
-    RootModule
+    RootModule,
+
   ],
-  providers: [],
+  providers: [
+    AppDataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

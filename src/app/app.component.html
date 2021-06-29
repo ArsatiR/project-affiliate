@@ -1,8 +1,8 @@
-<div class="my-overlay" *ngIf="showOverlay">
+<div class="my-overlay" *ngIf="showOverlay && !isUserLogon">
     <mat-spinner></mat-spinner>
 </div>
 <div *ngIf="!showOverlay">
   <!-- <router-outlet></router-outlet> -->
     <app-content-root></app-content-root>
 </div>
-<!-- <router-outlet></router-outlet> -->
+

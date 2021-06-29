@@ -8,7 +8,7 @@ import { LoginComponent } from '../../authentication/login/login.component';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
+a
   constructor(public dialog : MatDialog) { }
 
   ngOnInit() {

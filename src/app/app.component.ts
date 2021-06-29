@@ -8,6 +8,7 @@ import {
   NavigationCancel,
   NavigationError
 } from '@angular/router'
+import { AppDataService } from './core/services/app-data.service';
 
 // import { slideInAnimation } from './animations';
 
@@ -20,13 +21,24 @@ import {
 export class AppComponent {
   title = 'project-affiliate';
 
-  public showOverlay = true;
+  showOverlay = true;
+  isUserLogon = false;
 
-  constructor(private route: Router, public dialog: MatDialog) {
-    this.route.events.subscribe((event: RouterEvent) => {
-      this.navigationInterceptor(event)
+  constructor(private route: Router, public dialog: MatDialog,
+    private appDataService: AppDataService) {
+
+    this.route.events.subscribe(async (event: RouterEvent) => {
+      this.isUserLogon = await this.checkUserLogon()
+      if(!this.isUserLogon)this.navigationInterceptor(event)
+      else this.showOverlay = false
     })
     // console.log(this.showOverlay);
+  }
+
+  async checkUserLogon(){
+    const userExist = await this.appDataService.checkIsTokenExists()
+    if(userExist)return true;
+    return false
   }
 
   navigationInterceptor(event: RouterEvent): void {

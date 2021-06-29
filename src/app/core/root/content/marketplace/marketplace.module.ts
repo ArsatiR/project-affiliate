@@ -5,6 +5,8 @@ import { SharedModule } from 'src/app/core/modules/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { PromotionPopupComponent } from '../promotion-popup/promotion-popup.component';
 import { MarketplaceService } from './marketplace.service';
+import { LoginModule } from 'src/app/authentication/login/login.module';
+import { LoginComponent } from 'src/app/authentication/login/login.component';
 
 const routes: Routes =[
   {
@@ -17,14 +19,16 @@ const routes: Routes =[
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    LoginModule
   ],
   providers:[
     MarketplaceService
   ],
   declarations: [MarketplaceComponent, PromotionPopupComponent],
   entryComponents: [
-    PromotionPopupComponent
+    PromotionPopupComponent,
+    LoginComponent
   ]
 })
 export class MarketplaceModule { }

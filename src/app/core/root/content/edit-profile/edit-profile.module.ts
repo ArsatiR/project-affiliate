@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { SharedModule } from 'src/app/core/modules/shared.module';
 import { EditProfileComponent } from './edit-profile.component';
+import { EditProfileService } from './edit-profile.service';
 
 @NgModule({
+  exports:[EditProfileComponent],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+
   ],
   declarations: [EditProfileComponent],
-  entryComponents: [
-    EditProfileComponent
+  providers:[
+    EditProfileService,
+    DatePipe
   ]
 })
 export class EditProfileModule { }

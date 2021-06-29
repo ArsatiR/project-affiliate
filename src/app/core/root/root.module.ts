@@ -13,6 +13,7 @@ import { AppDataService } from '../services/app-data.service';
 import { EditProfileModule } from './content/edit-profile/edit-profile.module';
 import { RestApiConnectorService } from '../services/restapi-connector.service';
 import { DataManipulateService } from '../services/data-manipulate-service';
+import { EditProfileComponent } from './content/edit-profile/edit-profile.component';
 
 @NgModule({
   exports: [
@@ -38,6 +39,9 @@ import { DataManipulateService } from '../services/data-manipulate-service';
     AppDataService,
     RestApiConnectorService,
     DataManipulateService
+  ],
+  entryComponents:[
+    EditProfileComponent
   ]
 })
 export class RootModule { }

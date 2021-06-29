@@ -38,10 +38,10 @@ export class MarketplaceService implements Resolve<any>  {
   });
 }
 
-advanceSearch(storeName: any, totalTransaction:any, type:any, itemName:any, commissionRange:any, commissionStatus:any): Promise<any> {
+advanceSearch( totalTransaction:any, type:any, itemName:any, commissionRange:any, commissionStatus:any): Promise<any> {
   return new Promise((resolve, reject) => {
     this.restApiConnector
-      .get(this._classUrl + "advanceSearch", '&storeName=' + storeName + '&totalTransaction=' + totalTransaction + '&type=' + type + '&itemName=' + itemName + '&commissionRange=' + commissionRange + '&commissionStatus=' + commissionStatus)
+      .get(this._classUrl + "advanceSearch", '&totalTransaction=' + totalTransaction + '&type=' + type + '&itemName=' + itemName + '&commissionRange=' + commissionRange + '&commissionStatus=' + commissionStatus)
       .subscribe((response: any) => {
         this.message = response;
         this.onMessageChanged.next(this.message);

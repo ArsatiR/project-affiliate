@@ -60,14 +60,15 @@ export class ReferralComponent implements OnInit {
 
   async setStatus(status){
     await this.referralService.changeStatus(this.user.id, status).then((result)=>{
-      if(result){
-        this.snackBar.open(result, 'Ok', {
+      const response = JSON.parse(result)
+      if(response.status){
+        this.snackBar.open(response.message, 'Ok', {
           verticalPosition: 'top',
           duration: 5000
         });
         this.data.status = status
       }else{
-        this.snackBar.open("Error..", 'Ok', {
+        this.snackBar.open(response.message, 'Ok', {
           verticalPosition: 'top',
           duration: 5000
         });
@@ -94,13 +95,14 @@ export class ReferralComponent implements OnInit {
 
   async setManualCode(){
     await this.referralService.getGeneratedByUser(this.data.referralByUser, this.user.id).then((result)=>{
-      if(result){
-        this.snackBar.open(result, 'Ok', {
+      const response = JSON.parse(result)
+      if(response.status){
+        this.snackBar.open(response.message, 'Ok', {
           verticalPosition: 'top',
           duration: 5000
         });
       }else{
-        this.snackBar.open(result, 'Ok', {
+        this.snackBar.open(response.message, 'Ok', {
           verticalPosition: 'top',
           duration: 5000
         });

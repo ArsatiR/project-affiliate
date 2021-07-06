@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
@@ -24,16 +24,19 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   constructor(public dialog: MatDialog, private freqData: FrequentDataService,
     private router: Router,
-    private appDataService: AppDataService) { }
+    private appDataService: AppDataService) {
+      this.user = this.appDataService.getUserInfoWithoutPromise()
+    }
 
   ngOnInit() {
-    this.user = this.appDataService.getUserInfoWithoutPromise()
+
     if (this.appDataService.checkIsTokenExists()) {
       this.switchUserMode()
     } else this.switchGuestMode()
   }
 
   ngAfterViewInit() {
+
     if(this.isUser){
       this.drawer.toggle()
     }

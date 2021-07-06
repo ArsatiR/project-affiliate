@@ -110,8 +110,8 @@ export class CommissionComponent implements OnInit {
   ngOnInit() {
     this.user = this.appDataService.getUserInfoWithoutPromise()
     this.selectedRange = {
-      startDate: moment(this.dateNow.format("YYYY-MM-DD")),
-      endDate: moment(this.dateNow.format("YYYY-MM-DD")),
+      startDate: moment(moment().startOf("month").format("YYYY-MM-DD")),
+      endDate: moment(moment().endOf("month").format("YYYY-MM-DD")),
     };
 
   }

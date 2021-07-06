@@ -63,7 +63,7 @@ getAllData(limit: any): Promise<any> {
 savePromotion(promoterId: any, itemId:any): Promise<any> {
   return new Promise((resolve, reject) => {
     this.restApiConnector
-      .getString('apis/peripheral/' + "promote", '&promoterId=' + promoterId + '&itemId=' + itemId)
+      .get('apis/peripheral/' + "promote", '&promoterId=' + promoterId + '&itemId=' + itemId)
       .subscribe((response: any) => {
         this.message = response;
         this.onMessageChanged.next(this.message);

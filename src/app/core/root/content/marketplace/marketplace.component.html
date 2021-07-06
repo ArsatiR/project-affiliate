@@ -35,35 +35,40 @@
             </mat-select>
           </mat-form-field>
           <div class="slider-box">
-            Commission with
-            <br>
-            <mat-radio-group color="primary" (ngModelChange)="searchOnChange()" [(ngModel)]="commissionStatus"
-              (change)="changeStatus()" aria-label="Select an option">
-              <mat-radio-button [value]="1">%</mat-radio-button>
-              <mat-radio-button [value]="2">Rp.</mat-radio-button>
-            </mat-radio-group>
+            <mat-slide-toggle [checked]="toggleCommissionStatus" color="primary" (toggleChange)="toggleCommission()" >Toggle Commission</mat-slide-toggle>
           </div>
-          <div class="slider-box">
-            Commision Range: {{sliderCommission}}
-            <ng-container *ngIf="commissionStatus == 2;else status2">
-              <mat-slider color="primary" (ngModelChange)="searchOnChange()" thumbLabel
-                [displayWith]="formatLabelKomisi" tickInterval="1000" min="0" max="1000000"
-                [(ngModel)]="sliderCommission"></mat-slider>
-            </ng-container>
-            <ng-template #status2>
-              <mat-slider color="primary" (ngModelChange)="searchOnChange()" thumbLabel
-                [displayWith]="formatLabelKomisiPercent" tickInterval="1" min="0" max="100"
-                [(ngModel)]="sliderCommission"></mat-slider>
-            </ng-template>
-          </div>
+          <ng-container *ngIf="toggleCommissionStatus">
+            <div class="slider-box">
+              Commission with
+              <br>
+              <mat-radio-group color="primary" [(ngModel)]="commissionStatus"
+                (change)="changeStatus()" aria-label="Select an option">
+                <mat-radio-button [value]="1">Rp.</mat-radio-button>
+                <mat-radio-button [value]="2">%</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div class="slider-box">
+              Commision Range: {{sliderCommission}}
+              <ng-container *ngIf="commissionStatus == 1;else status2">
+                <mat-slider color="primary" (change)="searchOnChange()" thumbLabel
+                  [displayWith]="formatLabelKomisi" tickInterval="1000" min="0" max="1000000"
+                  [(ngModel)]="sliderCommission"></mat-slider>
+              </ng-container>
+              <ng-template #status2>
+                <mat-slider color="primary" (change)="searchOnChange()" thumbLabel
+                  [displayWith]="formatLabelKomisiPercent" tickInterval="1" min="0" max="100"
+                  [(ngModel)]="sliderCommission"></mat-slider>
+              </ng-template>
+            </div>
+          </ng-container>
           <!-- <div class="slider-box">
           Payout Range
           <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" min="1" max="100000"></mat-slider>
         </div> -->
           <div class="slider-box">
             Total Transaction: {{sliderTransaction}}
-            <mat-slider color="primary" (ngModelChange)="searchOnChange()" thumbLabel
-              [displayWith]="formatLabelPenjualan" tickInterval="1" min="1" max="100" [(ngModel)]="sliderTransaction">
+            <mat-slider color="primary" (change)="searchOnChange()" thumbLabel
+              [displayWith]="formatLabelPenjualan" tickInterval="1" min="0" max="100" [(ngModel)]="sliderTransaction">
             </mat-slider>
           </div>
           <!-- <div class="slider-box">
@@ -78,7 +83,7 @@
         <div id="search-box">
           <div class="search-wrapper">
             <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
-              <input class="form-control" type="text" name="search" [(ngModel)]="search" #filter placeholder="Search" />
+              <input class="form-control" type="text" name="search" (keyup)="loadAdvanceFilter()" [(ngModel)]="search" #filter placeholder="Search" />
             </div>
           </div>
           <div class="example-button-container" style="margin-top: 5px; margin-left: 42px">
@@ -96,7 +101,12 @@
                 <div class="search-container">
                   <div class="row">
                     <div class="col-3">
-                      <img class="card-img" [src]="item.imageUrl" alt="" />
+                      <ng-container *ngIf="item.imageUrl != null && item.imageUrl != 'null' && item.imageUrl != 'URL';else IMAGENULL">
+                        <img class="card-img" [src]="item.imageUrl" alt="" />
+                      </ng-container>
+                      <ng-template #IMAGENULL>
+                        <img class="card-img" src="../../../../../assets/imageKosong.png" alt="" />
+                      </ng-template>
                     </div>
                     <div class="col-9 card-detail">
                       <div class="title">
@@ -132,6 +142,10 @@
                               Rp. {{ item.commision }}</span>
                             <span *ngIf="item.commissionStat == 2">
                               {{ item.commision }}%</span>
+                          </div>
+                          <div class="center" matTooltip="Recurring">
+                            <mat-icon>history</mat-icon>
+                            <span> {{item.recurring}}</span>
                           </div>
                           <div class="rigth" matTooltip="Duration">
                             <mat-icon>timelapse</mat-icon>
@@ -169,7 +183,7 @@
 
       <div>
         <div class="pagination-wrapper w-100-p">
-          <mat-paginator></mat-paginator>
+          <mat-paginator [pageIndex]="page" [pageSize]="10" [length]="totalElements"  (page)="changePage($event)"></mat-paginator>
         </div>
       </div>
     </div>

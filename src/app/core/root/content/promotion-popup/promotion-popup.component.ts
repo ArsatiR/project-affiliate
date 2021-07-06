@@ -21,7 +21,7 @@ export class PromotionPopupComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.affiliateLink = this.data
+    this.affiliateLink = this.data.message
   }
 
 }

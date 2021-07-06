@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginComponent } from 'src/app/authentication/login/login.component';
 import { AppDataService } from 'src/app/core/services/app-data.service';
@@ -19,13 +20,20 @@ export class MarketplaceComponent implements OnInit {
   //data
   listType = []
   listData = []
+  listDataTemp = []
 
   //filter
   sliderCommission = 0;
-  commissionStatus = 2;
+  commissionStatus = 0;
   sliderTransaction = 0;
-  typeSales = "Stock";
+  toggleCommissionStatus = false;
+  typeSales = "None";
   search = "";
+
+  //paging
+  totalElements = 0;
+  page = 0;
+  limitPage = 10;
 
   constructor(public dialog: MatDialog,
     private marketplaceService: MarketplaceService,
@@ -41,17 +49,36 @@ export class MarketplaceComponent implements OnInit {
 
   async loadAllItem() {
     let data = await this.marketplaceService.getAllData(this.limit);
-    this.listData = data
+    this.totalElements = data.length;
+    this.page = 0;
 
+    this.totalElements = data.length;
+    this.page = 0;
+    this.listDataTemp = data
+    this.listData = this.listDataTemp.slice((this.page*this.limitPage), (this.page*this.limitPage+this.limitPage))
   }
 
   async loadAdvanceFilter() {
-    let data = await this.marketplaceService.advanceSearch(this.sliderTransaction, this.typeSales, this.search, this.sliderCommission, this.commissionStatus)
-    this.listData = data
+    let data = []
+    if(this.typeSales == "None"){
+      data = await this.marketplaceService.advanceSearch(this.sliderTransaction, "", this.search, this.sliderCommission, this.commissionStatus)
+    }else{
+      data = await this.marketplaceService.advanceSearch(this.sliderTransaction, this.typeSales, this.search, this.sliderCommission, this.commissionStatus)
+    }
+    this.totalElements = data.length;
+    this.page = 0;
+    this.listDataTemp = data
+    this.listData = this.listDataTemp.slice((this.page*this.limitPage), (this.page*this.limitPage+this.limitPage))
+  }
+
+  changePage(event:PageEvent){
+    this.page = event.pageIndex;
+    this.listData = this.listDataTemp.slice((this.page*this.limitPage), (this.page*this.limitPage+this.limitPage))
   }
 
   changeStatus() {
     this.sliderCommission = 0
+    this.searchOnChange()
   }
 
 
@@ -59,12 +86,17 @@ export class MarketplaceComponent implements OnInit {
   async openDialogPromotion(itemId) {
     if(this.appDataService.checkIsTokenExists()){
       await this.marketplaceService.savePromotion(this.user.id, itemId).then((result) => {
-        if (result) {
+        if (result.status) {
           this.snackBar.open("Promote Success", 'Ok', {
             verticalPosition: 'top',
             duration: 5000
           });
           this.openDialog(result)
+        }else{
+          this.snackBar.open("Error..", 'Ok', {
+            verticalPosition: 'top',
+            duration: 5000
+          });
         }
       });
     }else{
@@ -109,10 +141,21 @@ export class MarketplaceComponent implements OnInit {
   searchOnChange() {
     this.loadAdvanceFilter()
   }
+
+  toggleCommission(){
+    this.toggleCommissionStatus = !this.toggleCommissionStatus
+
+    if(!this.toggleCommissionStatus){
+      this.commissionStatus = 0
+      this.sliderCommission = 0
+      this.loadAdvanceFilter()
+    }
+  }
 }
 
 
 const LIST_TYPE: any = [
+  { id: 0, name: "None" },
   { id: 1, name: "Stock" },
   { id: 2, name: "Non Stock" },
   { id: 3, name: "Service" },

@@ -52,7 +52,7 @@ getByPromoter(promoterId: any): Promise<any> {
 getGeneratedBySystem(promoterId:any): Promise<any> {
   return new Promise((resolve, reject) => {
     this.restApiConnector
-      .getString(this._classUrl + "getGeneratedBySystem", '&promoterId=' + promoterId)
+      .get(this._classUrl + "getGeneratedBySystem", '&promoterId=' + promoterId)
       .subscribe((response: any) => {
         this.message = response;
         this.onMessageChanged.next(this.message);

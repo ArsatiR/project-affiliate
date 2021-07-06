@@ -78,12 +78,12 @@ export class ReferralComponent implements OnInit {
 
   async regenerateCode(){
     await this.referralService.getGeneratedBySystem(this.user.id).then((result)=>{
-      if(result){
+      if(result.status){
         this.snackBar.open("Generate Code Success", 'Ok', {
           verticalPosition: 'top',
           duration: 5000
         });
-        this.data.referralBySystem = result
+        this.data.referralBySystem = result.message
       }else{
         this.snackBar.open("Error..", 'Ok', {
           verticalPosition: 'top',

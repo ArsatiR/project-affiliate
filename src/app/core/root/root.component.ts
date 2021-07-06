@@ -30,7 +30,7 @@ export class RootComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    if (this.appDataService.checkIsTokenExists()) {
+    if (this.appDataService.checkIsTokenExists() && this.user) {
       this.switchUserMode()
     } else this.switchGuestMode()
   }
@@ -38,6 +38,7 @@ export class RootComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
     if(this.isUser){
+
       this.drawer.toggle()
     }
   }
@@ -47,6 +48,8 @@ export class RootComponent implements OnInit, AfterViewInit {
   }
 
   switchGuestMode() {
+    this.appDataService.removeAllSessionCookiesData();
+    this.appDataService.removeAllSessionObjectData();
     this.isUser = false;
   }
 

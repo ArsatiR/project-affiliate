@@ -24,4 +24,8 @@ export class PromotionPopupComponent implements OnInit {
     this.affiliateLink = this.data.message
   }
 
+  routing(){
+    this.dialogRef.close()
+  }
+
 }

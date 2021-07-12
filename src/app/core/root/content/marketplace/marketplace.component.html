@@ -95,6 +95,49 @@
         </div>
 
         <div class="main-search">
+
+          <ng-container *ngIf="!isProcess">
+            <div class="row">
+                <div class="widget-group" fxLayout="row" fxFlex="100" fxLayoutWrap fxLayoutAlign="start start">
+                    <div id="error-500" fxLayout="column" fxLayoutAlign="center center">
+
+                        <div class="content" fxLayout="column" fxLayoutAlign="center center">
+
+                            <div class="error-code">Receiving Data</div>
+                            <mat-progress-bar mode="indeterminate" color="primary"></mat-progress-bar>
+
+                            <div class="sub-message">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="isNoTransaction && isProcess">
+            <div class="row">
+                <div class="widget-group" fxLayout="row" fxFlex="100" fxLayoutWrap fxLayoutAlign="start start">
+                    <div id="error-500" fxLayout="column" fxLayoutAlign="center center">
+
+                        <div class="content" fxLayout="column" fxLayoutAlign="center center">
+
+                            <div class="error-code">No Data</div>
+
+
+                            <div class="sub-message">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!isNoTransaction && isProcess">
           <div class="main-search-wrapper">
             <ng-container *ngFor="let item of listData">
               <div class="search-card">
@@ -178,6 +221,7 @@
               </div>
             </ng-container>
           </div>
+        </ng-container>
         </div>
       </div>
 

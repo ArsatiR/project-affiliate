@@ -35,6 +35,10 @@ export class MarketplaceComponent implements OnInit {
   page = 0;
   limitPage = 10;
 
+  //animation
+  isProcess = false;
+  isNoTransaction = true;
+
   constructor(public dialog: MatDialog,
     private marketplaceService: MarketplaceService,
     private appDataService: AppDataService,
@@ -44,31 +48,44 @@ export class MarketplaceComponent implements OnInit {
   ngOnInit() {
     this.user = this.appDataService.getUserInfoWithoutPromise()
     this.listType = LIST_TYPE
+    this.isProcess = false;
     this.loadAllItem()
   }
 
   async loadAllItem() {
-    let data = await this.marketplaceService.getAllData(this.limit);
-    this.totalElements = data.length;
+    let dataTemp = []
+    await this.marketplaceService.getAllData(this.limit).then(data =>{
+      dataTemp = data
+      if(dataTemp.length > 0 )this.isNoTransaction = false;
+      else this.isNoTransaction = true
+    });
+    this.totalElements = dataTemp.length;
     this.page = 0;
-
-    this.totalElements = data.length;
-    this.page = 0;
-    this.listDataTemp = data
+    this.listDataTemp = dataTemp
     this.listData = this.listDataTemp.slice((this.page*this.limitPage), (this.page*this.limitPage+this.limitPage))
+    this.isProcess = true
   }
 
   async loadAdvanceFilter() {
-    let data = []
+    let dataTemp = []
     if(this.typeSales == "None"){
-      data = await this.marketplaceService.advanceSearch(this.sliderTransaction, "", this.search, this.sliderCommission, this.commissionStatus)
+      await this.marketplaceService.advanceSearch(this.sliderTransaction, "", this.search, this.sliderCommission, this.commissionStatus).then(data=>{
+        dataTemp = data
+        if(dataTemp.length > 0 )this.isNoTransaction = false;
+        else this.isNoTransaction = true
+      })
     }else{
-      data = await this.marketplaceService.advanceSearch(this.sliderTransaction, this.typeSales, this.search, this.sliderCommission, this.commissionStatus)
+      await this.marketplaceService.advanceSearch(this.sliderTransaction, this.typeSales, this.search, this.sliderCommission, this.commissionStatus).then(data=>{
+        dataTemp = data
+        if(dataTemp.length > 0 )this.isNoTransaction = false;
+        else this.isNoTransaction = true
+      })
     }
-    this.totalElements = data.length;
+    this.totalElements = dataTemp.length;
     this.page = 0;
-    this.listDataTemp = data
+    this.listDataTemp = dataTemp
     this.listData = this.listDataTemp.slice((this.page*this.limitPage), (this.page*this.limitPage+this.limitPage))
+    this.isProcess = true;
   }
 
   changePage(event:PageEvent){
@@ -148,6 +165,7 @@ export class MarketplaceComponent implements OnInit {
     if(!this.toggleCommissionStatus){
       this.commissionStatus = 0
       this.sliderCommission = 0
+      this.isProcess = false;
       this.loadAdvanceFilter()
     }
   }

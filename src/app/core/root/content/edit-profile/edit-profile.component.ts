@@ -30,7 +30,6 @@ export class EditProfileComponent implements OnInit {
 
   async getUser(){
     this.user = await this.appDataService.getUserInfoWithoutPromise()
-    console.log(this.user)
     this.createForm()
   }
 

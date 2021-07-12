@@ -35,7 +35,7 @@ export class CommissionComponent implements OnInit {
 
   //table
   dataSourceMerchant: MatTableDataSource<merchant>;
-  displayedColumnsMerchant = ['nama', 'link', 'pengunjung', 'transaksi', 'komisi']
+  displayedColumnsMerchant = ['nama', 'link', 'pengunjung', 'transaksi', 'totalRecurring', 'komisi']
 
   private paginator: MatPaginator
   @ViewChild(MatPaginator)set matPaginator(mp: MatPaginator){
